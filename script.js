@@ -22,8 +22,8 @@ async function fetchData(){
   title.innerHTML = `${data.drinks[0].strDrink}`
   excerpt.innerHTML = `${data.drinks[0].strInstructions}`
 
-  if(excerpt.innerHTML.length > 100 ){
-    excerpt.innerHTML = `${data.drinks[0].strInstructions}`.substring(0,100) + "..."
+  if(excerpt.innerHTML.length > 150 ){
+    excerpt.innerHTML = `${data.drinks[0].strInstructions}`.substring(0,150) + `<small class="read-more"> ...read more</small>`
   }
 
   const userResponse = await fetch("https://randomuser.me/api/")
@@ -36,4 +36,34 @@ async function fetchData(){
 
   animated_bgs.forEach(bg => bg.classList.remove('animated-bg'))
   animated_bgs_text.forEach(bg => bg.classList.remove('animated-bgs-text'))
+
+
+  //READ MORE-LESS FUNCTİONALİTY
+  if(document.querySelector(".read-more")){
+    const readMore = document.querySelector('.read-more') 
+    readMore.addEventListener('click', ReadMore)
+  }
+
+  function ReadMore() {
+    excerpt.innerHTML = `${data.drinks[0].strInstructions}` +` <small class="read-less"> read less</small>`
+
+    if(document.querySelector(".read-less")){
+      const readLess = document.querySelector('.read-less') 
+      readLess.addEventListener('click', ReadLess)
+    }
+    
+  }
+
+  function ReadLess() {
+    excerpt.innerHTML = excerpt.innerHTML.substring(0,150) + `<small class="read-more">...read more</small>`
+
+    if(document.querySelector(".read-more")){
+      const readMore = document.querySelector('.read-more') 
+      readMore.addEventListener('click', ReadMore)
+    }
+
+  }
+
 }
+
+
