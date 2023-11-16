@@ -4,6 +4,8 @@ const excerpt = document.getElementById('excerpt')
 const profile_img = document.getElementById('profile_img')
 const names = document.getElementById('name')
 const date = document.getElementById('date')
+const button = document.querySelector('button')
+
 
 const animated_bgs = document.querySelectorAll('.animated-bg')
 const animated_bgs_text = document.querySelectorAll('.animated-bg-text')
@@ -16,7 +18,7 @@ setTimeout(()=>{
 async function fetchData(){
   const response = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php")
   const data = await response.json()
-  console.log(data);
+  
 
   header.innerHTML = `<img src="${data.drinks[0].strDrinkThumb}" alt="" />`
   title.innerHTML = `${data.drinks[0].strDrink}`
@@ -67,3 +69,18 @@ async function fetchData(){
 }
 
 
+button.addEventListener('click', ()=>{
+  header.innerHTML = "";
+  title.innerHTML = "";
+  excerpt.innerHTML = "";
+  profile_img.innerHTML = "";
+  names.innerHTML =  "";
+  date.innerHTML = "";
+  animated_bgs.forEach(bg => bg.classList.add('animated-bg'))
+  animated_bgs_text.forEach(bg => bg.classList.add('animated-bgs-text'))
+  setTimeout(()=>{
+    animated_bgs.forEach(bg => bg.classList.remove('animated-bg'))
+    animated_bgs_text.forEach(bg => bg.classList.remove('animated-bgs-text'))
+    fetchData()
+  },500)
+})
